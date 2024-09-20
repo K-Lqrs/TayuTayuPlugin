@@ -28,14 +28,16 @@ object DiscordEmbed {
         val name = player.name
         val uuid = player.uniqueId.toString()
         val imageUrl = "https://visage.surgeplay.com/face/256/$uuid"
-        sendEmbedToDiscord(Color.GREEN, "$name joined the server", imageUrl)
+
+        sendEmbedToDiscord(Color.GREEN, "$name がサーバーに参加しました", imageUrl)
     }
 
     fun sendPlayerLeftEmbed(player: Player) {
         val name = player.name
         val uuid = player.uniqueId.toString()
         val imageUrl = "https://visage.surgeplay.com/face/256/$uuid"
-        sendEmbedToDiscord(Color.RED, "$name left the server", imageUrl)
+
+        sendEmbedToDiscord(Color.RED, "$name がサーバーから退出しました", imageUrl)
     }
 
     fun sendPlayerDeathEmbed(player: Player, deathMessage: Component) {
@@ -48,6 +50,11 @@ object DiscordEmbed {
         val name = player.name
         val uuid = player.uniqueId.toString()
         val imageUrl = "https://visage.surgeplay.com/face/256/$uuid"
-        sendEmbedToDiscord(Color.YELLOW, "$name has made the advancement $criterion", imageUrl)
+
+        val message = """
+            ⭐ **$name** が新たな実績「_${criterion}_」を獲得しました！ 🎉
+        """.trimIndent()
+
+        sendEmbedToDiscord(Color.YELLOW, message, imageUrl)
     }
 }

@@ -53,12 +53,14 @@ class TTListener() : Listener {
         val containsMentionFormat = plainMessage.contains(Regex("<@!|<@"))
         val containsRoleMentionFormat = plainMessage.contains(Regex("<@&"))
 
-        if (!containsHiraganaKatakanaOrKanji && !containsUpperCase && containsMentionFormat && containsRoleMentionFormat) {
-            val config = LunaChat.getConfig()
-            val api = LunaChat.getAPI()
+        if (plugin.useLuna == true) {
+            if (!containsHiraganaKatakanaOrKanji && !containsUpperCase && containsMentionFormat && containsRoleMentionFormat) {
+                val config = LunaChat.getConfig()
+                val api = LunaChat.getAPI()
 
-            if (api.isPlayerJapanize(player.name) && config.japanizeType != JapanizeType.NONE) {
-                japanizedMessage = api.japanize(plainMessage, config.japanizeType)
+                if (api.isPlayerJapanize(player.name) && config.japanizeType != JapanizeType.NONE) {
+                    japanizedMessage = api.japanize(plainMessage, config.japanizeType)
+                }
             }
         }
 
@@ -78,11 +80,13 @@ class TTListener() : Listener {
 
         val shouldAnnounceToChat = display?.doesAnnounceToChat() ?: false
 
-        val advancementName = display?.title()?.let { PlainTextComponentSerializer.plainText().serialize(it) }
-            ?: advancement.key.toString()
+        val advancementKey = advancement.key.key.toString().replace("/", ".")
+        val translationKey = "advancements.${advancementKey}.title"
+
+        val japaneseAdvancementName = plugin.advancementTranslations[translationKey] ?: advancementKey.toString()
 
         if (shouldAnnounceToChat) {
-            DiscordEmbed.sendPlayerGrantCriterionEmbed(event.player, advancementName)
+            DiscordEmbed.sendPlayerGrantCriterionEmbed(event.player, japaneseAdvancementName)
         }
     }
 

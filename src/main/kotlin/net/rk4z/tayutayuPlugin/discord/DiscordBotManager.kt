@@ -50,7 +50,7 @@ object DiscordBotManager : ListenerAdapter() {
             guildId = jda?.guilds?.firstOrNull()?.id
 
             jda?.updateCommands()?.addCommands(
-                Commands.slash("playerlist", "Get a list of online players")
+                Commands.slash("playerlist", "オンラインのプレイヤーを取得します")
             )?.queue()
 
             jda?.updateCommands()
@@ -193,7 +193,7 @@ object DiscordBotManager : ListenerAdapter() {
                 },
                 { error ->
                     // メンバーの取得に失敗した場合
-                    plugin.logger.error("Failed to retrieve member: ${error.message}")
+                    plugin.logger.error("Memberの取得に失敗しました: ${error.message}")
                     event.message.reply("メンバーが見つかりませんでした。").queue {
                         plugin.executorService.schedule({
                             it.delete().queue()
@@ -206,7 +206,7 @@ object DiscordBotManager : ListenerAdapter() {
 
     private fun handlePlayerListCommand(event: SlashCommandInteractionEvent) {
         val server = server ?: run {
-            plugin.logger.error("MinecraftServer is not initialized. Cannot process /playerlist command.")
+            plugin.logger.error("Serverが初期化されていません。コマンドを処理できません。")
             event.reply("プレイヤーリストを取得できませんでした。")
                 .setEphemeral(true)
                 .queue {
@@ -221,9 +221,9 @@ object DiscordBotManager : ListenerAdapter() {
         val playerCount = onlinePlayers.size
 
         val embedBuilder = EmbedBuilder()
-            .setTitle("Online Players")
+            .setTitle("オンラインのプレイヤー")
             .setColor(Color.GREEN)
-            .setDescription("There are currently $playerCount players online.\n")
+            .setDescription("現在 $playerCount 人のプレイヤーがオンラインです。")
 
         if (playerCount > 0) {
             val playerList = onlinePlayers.joinToString(separator = "\n") { player -> player.name }
@@ -232,7 +232,11 @@ object DiscordBotManager : ListenerAdapter() {
             embedBuilder.setDescription("There are currently no players online.")
         }
 
-        event.replyEmbeds(embedBuilder.build()).queue()
+        event.replyEmbeds(embedBuilder.build()).queue {
+            plugin.executorService.schedule({
+                it.deleteOriginal().queue()
+            }, 15, TimeUnit.SECONDS)
+        }
     }
 
     private fun findMentionedPlayers(messageContent: String, players: Collection<Player>): List<Player> {

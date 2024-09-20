@@ -1,5 +1,6 @@
 package net.rk4z.tayutayuPlugin
 
+import com.google.gson.JsonParser
 import net.rk4z.tayutayuPlugin.utils.Util.copyResourceToFile
 import net.rk4z.tayutayuPlugin.utils.Util.getNullableBoolean
 import net.rk4z.tayutayuPlugin.utils.Util.getNullableString
@@ -13,6 +14,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import java.io.IOException
+import java.io.InputStreamReader
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.util.concurrent.Executors
@@ -30,6 +32,7 @@ class TayutayuPlugin : JavaPlugin() {
     val configFile = Paths.get(dataFolder.absolutePath, "config.yml")
     val logger: Logger = LoggerFactory.getLogger(TayutayuPlugin::class.java.simpleName)
     var requiredFieldsNull: Boolean = false
+    val advancementTranslations = mutableMapOf<String, String>()
     private val yaml = Yaml()
     val db = DataBase(this)
 
@@ -57,6 +60,7 @@ class TayutayuPlugin : JavaPlugin() {
 
     override fun onLoad() {
         instance = getPlugin(TayutayuPlugin::class.java)
+        loadJapaneseTranslations()
 
         checkRequiredFilesAndDirectories()
 
@@ -97,6 +101,17 @@ class TayutayuPlugin : JavaPlugin() {
 
     override fun onDisable() {
         DiscordBotManager.stop()
+    }
+
+    fun loadJapaneseTranslations() {
+        val inputStream = this::class.java.classLoader.getResourceAsStream("advancements.json")
+        if (inputStream != null) {
+            val reader = InputStreamReader(inputStream)
+            val json = JsonParser.parseReader(reader).asJsonObject
+            json.entrySet().forEach { entry ->
+                advancementTranslations[entry.key] = entry.value.asString
+            }
+        }
     }
 
     private fun checkRequiredFilesAndDirectories() {
@@ -183,10 +198,10 @@ class TayutayuPlugin : JavaPlugin() {
             messageStyle = "classic"
         }
         if (serverStartMessage.isNullOrBlank()) {
-            serverStartMessage = ":white_check_mark: **Server has started!**"
+            serverStartMessage = ":white_check_mark: **サーバーが起動しました！**"
         }
         if (serverStopMessage.isNullOrBlank()) {
-            serverStopMessage = ":octagonal_sign: **Server has stopped!**"
+            serverStopMessage = ":octagonal_sign: **サーバーが停止しました！**"
         }
     }
 
