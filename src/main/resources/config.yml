@@ -1,0 +1,80 @@
+# Thank you for introducing the mod.
+# You can bridge Discord and Minecraft chat!
+
+# Click here for various links↓.
+# GitHub -> https://github.com/KT-Ruxy/Fabricord
+# Modrinth -> https://modrinth.com/mod/fabricord
+
+# Whitelistの登録に使用するチャンネル。このチャンネルで送信されたメッセージは、MCIDとして認識され、Whitelist追加に使用されます。
+AuthChannelID: ""
+
+# 参加申請をした際に付与されるロールのID。
+AuthRoleID: ""
+
+# 認証済みのユーザーに付与されるロールのID
+AuthedRoleID: ""
+
+# LunaChatを使用するかどうかを設定します。
+UseLuna: false
+
+# DiscordのBotToken
+# どう入手するの？ -> https://discord.com/developers/applications
+BotToken: ""
+
+
+# ログを送信するDiscordのチャンネルID
+# もしこのフィールドが空の場合、メッセージは送信されません
+# どうやってIDを取得するの？ -> https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID
+LogChannelID: ""
+
+
+# >----- Advanced Settings -----< #
+
+
+# Botのアクティビティステータスを変更できます。
+# "PLAYING", "STREAMING", "LISTENING", "WATCHING" が使用できます。
+# もし空欄なら、, "PLAYING" が自動的に代入されます。
+BotActivityStatus: ""
+
+
+# Botのアクティビティメッセージを変更できます。
+# もし空欄なら、, "Minecraft" が自動的に代入されます。
+BotActivityMessage: ""
+
+# Botのオンラインステータスを変更できます。
+# "ONLINE", "IDLE", "DO_NOT_DISTURB" が使用できます。
+# もし空欄なら、, "ONLINE" が自動的に代入されます。
+BotOnlineStatus: ""
+
+# メッセージスタイルを変更できます。
+# "classic", "modern" が使用できます。
+# もし空欄なら、, "classic" が自動的に代入されます。
+MessageStyle: ""
+
+
+# もし "MessageStyle" を "modern" に設定したなら、ここを入力する必要があります。
+# どうやってURLを取得するの？ -> https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks
+WebhookUrl: ""
+
+
+# サーバー開始時のメッセージを変更できます。
+# もし空欄なら、デフォルトのメッセージ（Server has started）が使用されます。
+ServerStartMessage: ""
+
+
+# サーバー停止時のメッセージを変更できます。
+# もし空欄なら、デフォルトのメッセージ（Server has stopped）が使用されます。
+ServerStopMessage: ""
+
+
+# プレイヤーがサーバーに参加したときのメッセージを変更できます。
+# もし空欄なら、デフォルトのメッセージが使用されます。
+PlayerJoinMessage: ""
+
+
+# プレイヤーがサーバーから退出したときのメッセージを変更できます。
+# もし空欄なら、デフォルトのメッセージが使用されます。
+PlayerLeaveMessage: ""
+
+
+# >-----------------------------< #

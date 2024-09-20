@@ -1,0 +1,7 @@
+name: TayuTayuPlugin
+version: '1.0.0'
+main: net.rk4z.tayutayuPlugin.TayutayuPlugin
+api-version: '1.20'
+load: STARTUP
+authors: [ Lars ]
+description: たぬきの森サーバー用に制作したオーダーメイドプラグイン！
